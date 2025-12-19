@@ -3,13 +3,21 @@
 # P-DMA ECC Error Injection
 **This code example demonstrates the usage of the ECC error injection feature to test the functionality of the ECC logic for the P-DMA channel configuration SRAM memory.**
 
+## Requirements
+
+- [ModusToolbox&trade;](https://www.infineon.com/modustoolbox) v3.0 or later (tested with v3.0)
+
+## Supported toolchains (make variable 'TOOLCHAIN')
+
+- GNU Arm&reg; Embedded Compiler v11.3.1 (`GCC_ARM`) – Default value of `TOOLCHAIN`
+
 ## Device
 The device used in this code example (CE) is:
 - [TRAVEO™ T2G CYT4BF Series](https://www.infineon.com/cms/en/product/microcontroller/32-bit-traveo-t2g-arm-cortex-microcontroller/32-bit-traveo-t2g-arm-cortex-for-body/traveo-t2g-cyt4bf-series/)
 
 ## Board
 The board used for testing is:
-- TRAVEO™ T2G evaluation kit ([KIT_T2G-B-H_EVK](https://www.infineon.com/cms/en/product/evaluation-boards/kit_t2g-b-h_evk/), [KIT_T2G-B-H_LITE](https://www.infineon.com/cms/en/product/evaluation-boards/kit_t2g-b-h_lite/))
+- TRAVEO™ T2G evaluation kit ([KIT_T2G-B-H_EVK](https://www.infineon.com/evaluation-board/KIT-T2G-B-H-EVK), [KIT_T2G-B-H_LITE](https://www.infineon.com/evaluation-board/KIT-T2G-B-H-LITE))
 
 ## Scope of work
 
@@ -74,16 +82,16 @@ Here are the steps for ECC fault injection:
 
 In summary, enabling ECC fault injection, specifying the SRAM word address, and providing the faulting parity value allow you to perform a write operation to the appropriate SRAM_DATA register. The ECC logic will then store the configured ECC parity along with the data, and any mismatch detected during read operations will trigger a fault, indicating data corruption. This mechanism helps in testing the ECC logic and verifying the fault reporting path while protecting data integrity in the system.
 
-More details can be found in [Technical Reference Manual (TRM)](https://www.infineon.com/dgdl/?fileId=5546d4627600a6bc017600bfae720007), [Registers TRM](https://www.infineon.com/dgdl/?fileId=5546d4627600a6bc017600be2aef0004) and [Data Sheet](https://www.infineon.com/dgdl/?fileId=5546d46275b79adb0175dc8387f93228).
+More details of TRAVEO™ T2G CYT4BF Series can be found in Technical Reference Manual (TRM), Registers TRM and Data Sheet. (See the [here](https://www.infineon.com/products/microcontroller/32-bit-traveo-t2g-arm-cortex/for-body/t2g-cyt4bf#documents))
 
 ## Hardware setup
 
 This CE has been developed for:
-- TRAVEO™ T2G evaluation kit ([KIT_T2G-B-H_EVK](https://www.infineon.com/cms/en/product/evaluation-boards/kit_t2g-b-h_evk/))<BR>
+- TRAVEO™ T2G evaluation kit ([KIT_T2G-B-H_EVK](https://www.infineon.com/evaluation-board/KIT-T2G-B-H-EVK))<BR>
 <img src="./images/KIT_T2G-B-H_EVK.gif"/><BR>
 No changes are required from the board's default settings.
 
-- TRAVEO™ T2G evaluation kit lite ([KIT_T2G-B-H_LITE](https://www.infineon.com/cms/en/product/evaluation-boards/kit_t2g-b-h_lite/))<BR>
+- TRAVEO™ T2G evaluation kit lite ([KIT_T2G-B-H_LITE](https://www.infineon.com/evaluation-board/KIT-T2G-B-H-LITE))<BR>
 <img src="./images/KIT_T2G-B-H_LITE.gif"/><BR>  
 No changes are required from the board's default settings.
 
@@ -119,7 +127,7 @@ SRAM word #1 of the P-DMA channel is configured to hold the current descriptor a
 
 **Parity calculation**
 
-The parity value for the 32-bit test data at the provided P-DMA SRAM word address is calculated in the *getParityForValue()* function using the algorithm mentioned in the [Technical Reference Manual (TRM)](https://www.infineon.com/dgdl/?fileId=5546d4627600a6bc017600bfae720007) section *ECC for P-DMA Channel Configuration SRAMs*. 
+The parity value for the 32-bit test data at the provided P-DMA SRAM word address is calculated in the *getParityForValue()* function using the algorithm mentioned in the [Technical Reference Manual (TRM)](https://www.infineon.com/products/microcontroller/32-bit-traveo-t2g-arm-cortex/for-body/t2g-cyt4bf#documents) section *ECC for P-DMA Channel Configuration SRAMs*. 
 
 **ECC error injection**
 
@@ -146,7 +154,7 @@ A two-bit error is induced into the correct parity by flipping two bits. This va
 The test step is passed if the injected 2-bit ECC error has caused a fault interrupt.
 
 ## Run and Test
-For this example, a terminal emulator is required for displaying outputs. Install a terminal emulator if you do not have one. Instructions in this document use [Tera Term](https://ttssh2.osdn.jp/index.html.en).
+For this example, a terminal emulator is required for displaying outputs. Install a terminal emulator if you do not have one. Instructions in this document use [Tera Term](https://teratermproject.github.io/index-en.html).
 
 After code compilation, perform the following steps for flashing the device:
 1. Connect the board to your PC using the provided USB cable through the KitProg3 USB connector.
@@ -158,7 +166,7 @@ After code compilation, perform the following steps for flashing the device:
 
    *Figure 1. Terminal output on program startup*<BR><img src="./images/terminal-output.png" width="640"/>
 
-5. You can debug the example to step through the code. In the IDE, use the **[Project Name] Debug (KitProg3_MiniProg4)** configuration in the **Quick Panel**. For details, see the "Program and debug" section in the [Eclipse IDE for ModusToolbox™ software user guide](https://www.cypress.com/MTBEclipseIDEUserGuide).
+5. You can debug the example to step through the code. In the IDE, use the **[Project Name] Debug (KitProg3_MiniProg4)** configuration in the **Quick Panel**. For details, see the "Program and debug" section in the [Eclipse IDE for ModusToolbox™ software user guide](https://www.infineon.com/MTBEclipseIDEUserguide).
 
 **Note:** **(Only while debugging)** On the CM7 CPU, some code in *main()* may execute before the debugger halts at the beginning of *main()*. This means that some code executes twice: once before the debugger stops execution, and again after the debugger resets the program counter to the beginning of *main()*. See [KBA231071](https://community.cypress.com/docs/DOC-21143) to learn about this and for the workaround.
 
@@ -175,9 +183,9 @@ Test step 3 is passed if the injected 2-bit ECC error has caused a fault interru
 ## References            
 
 Relevant Application notes are:
-- AN235305 - GETTING STARTED WITH TRAVEO™ T2G FAMILY MCUS IN MODUSTOOLBOX™
-- [AN220191](https://www.infineon.com/dgdl/?fileId=8ac78c8c7cdc391c017d0d3aee0b678a) - HOW TO USE DIRECT MEMORY ACCESS (DMA) CONTROLLER IN TRAVEO II FAMILY 
-- [AN219842](https://www.infineon.com/dgdl/?fileId=8ac78c8c7cdc391c017d0d3a490a6732) - HOW TO USE INTERRUPT IN TRAVEO™ II
+- [AN235305](https://www.infineon.com/assets/row/public/documents/10/42/infineon-an235305-getting-started-with-traveo-t2g-family-mcus-in-modustoolbox-applicationnotes-en.pdf?fileId=8ac78c8c8b6555fe018c1fddd8a72801) - GETTING STARTED WITH TRAVEO™ T2G FAMILY MCUS IN MODUSTOOLBOX™
+- [AN220191](https://www.infineon.com/gated/infineon-an220191---how-to-use-direct-memory-access-dma-controller-in-traveot2g-family-ja-applicationnotes-ja_dcfc7b53-3e40-4493-9222-f01df2bb68ea) - HOW TO USE DIRECT MEMORY ACCESS (DMA) CONTROLLER IN TRAVEO II FAMILY 
+- [AN219842](https://www.infineon.com/gated/infineon-an219842---how-to-use-interrupt-in-traveo-tm-t2g-applicationnotes-en_e814fbc2-fb47-47c2-b1f6-1b83394459aa) - How to use interrupt in TRAVEO™ II
 
 ModusToolbox™ is available online:
 - <https://www.infineon.com/modustoolbox>
@@ -186,10 +194,11 @@ Associated TRAVEO™ T2G MCUs can be found on:
 - <https://www.infineon.com/cms/en/product/microcontroller/32-bit-traveo-t2g-arm-cortex-microcontroller/>
 
 More code examples can be found on the GIT repository:
-- [TRAVEO™ T2G Code examples](https://github.com/orgs/Infineon/repositories?q=mtb-t2g-&type=all&language=&sort=)
+- [TRAVEO™ T2G Code examples](https://github.com/orgs/Infineon/repositories?q=topic%3Akit-t2g-b-h-lite&type=all&language=&sort=) for [KIT_T2G-B-H_LITE](https://www.infineon.com/evaluation-board/KIT-T2G-B-H-LITE)
+- [TRAVEO™ T2G Code examples](https://github.com/orgs/Infineon/repositories?q=topic%3Akit-t2g-b-h-evk&type=all&language=&sort=) for [KIT_T2G-B-H_EVK](https://www.infineon.com/evaluation-board/KIT-T2G-B-H-EVK)
 
 For additional training, visit our webpage:  
-- [TRAVEO™ T2G training](https://www.infineon.com/cms/en/product/microcontroller/32-bit-traveo-t2g-arm-cortex-microcontroller/32-bit-traveo-t2g-arm-cortex-for-body/traveo-t2g-cyt4bf-series/#!trainings)
+- [TRAVEO™ T2G trainings](https://www.infineon.com/training/microcontroller-trainings)
 
 For questions and support, use the TRAVEO™ T2G Forum:  
 - <https://community.infineon.com/t5/TRAVEO-T2G/bd-p/TraveoII>  
